@@ -1,0 +1,140 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://www.heartfocus.ai/user-manuals, https://www.heartfocus.ai/faq-heartfocus,
+  https://www.heartfocus.ai/faq-heartfocus-link, the HeartFocus v1.3.1 user manual, and
+  the openFDA 510(k) record for Deski
+note: >-
+  This is a PRODUCT lifecycle, not an API lifecycle. DESKi ships a regulated mobile
+  application; there is no API version, no versioned base path, no Sunset/Deprecation
+  header surface and no API deprecation policy, because there is no API. What DESKi does
+  publish — dated electronic instructions for use per software version, a stated product
+  retirement date, licence renewal mechanics and FDA clearance dates — is captured below.
+versioning:
+  scheme: semver-ish product versions (major.minor.patch), e.g. v1.1.1, v1.2.1, v1.3.1
+  applies_to: HeartFocus mobile application (iOS/iPadOS)
+  api_versioning: none
+  api_versioning_reason: no API is published
+  policy_published: false
+  note: >-
+    Version history is only inferable from the dated user-manual (eIFU) list; there is no
+    release-notes or changelog page. App Store release notes are the closest thing to a
+    changelog and live on Apple's surface, not DESKi's.
+versions:
+- version: 1.3.1
+  artifact: HeartFocus v1.3.1 user manual (English, rev1)
+  published: '2026-06-16'
+  url: >-
+    https://cdn.prod.website-files.com/663923b192e5c27512699a81/6a3142c4069ee581aebecabd_HF%20v1.3.1%20User_Manual.pdf
+  note: >-
+    Adds iPhone support (the v1.3 human-factors study "support[ed] the extension of the
+    software to mobile phone platforms"). Corresponds in time to the K260780 Special 510(k).
+- version: 1.2.1
+  artifact: HeartFocus v1.2.1 user manual (English, rev2 - FDA)
+  published: '2025-12-22'
+  url: >-
+    https://cdn.prod.website-files.com/663923b192e5c27512699a81/6a14684c426d3c194367763e_HF%20v1.2.1%20User_Manual_en_rev2%20-%20FDA.pdf
+- version: 1.1.1
+  artifact: HeartFocus v1.1.1 user manual (English, rev5)
+  published: '2025-04-15'
+  cleared: '2025-04-04'
+  clearance: K242807
+  note: >-
+    The version named in the first FDA 510(k) clearance. Manual PDF still reachable at
+    cdn.prod.website-files.com but no longer linked from /user-manuals.
+eifu:
+  published: true
+  url: https://www.heartfocus.ai/user-manuals
+  format: PDF
+  printed_copy: >-
+    Available at no extra cost on request to support@deski.ai; the manual states a maximum
+    delivery time commitment.
+  note: >-
+    Only the two most recent versions are listed. Superseded manuals are unlinked rather
+    than archived at a stable index, so there is no public version history to walk.
+product_events:
+- event: retirement
+  product: HeartFocus Education
+  date: '2025-08-24'
+  detail: >-
+    "This product was free and is retired from the market on August 24th, 2025." Previously
+    distributed for education only via Butterfly Garden; not a medical device and not for
+    clinical use.
+  source: https://www.heartfocus.ai/faq-heartfocus
+- event: launch
+  product: HeartFocus (clinical, FDA cleared)
+  date: '2025-08-27'
+  detail: First US clinical launch, on Butterfly Network iQ+ and iQ3 probes.
+  source: https://www.heartfocus.ai/faq-heartfocus
+- event: clearance
+  product: HeartFocus (V.1.1.1)
+  date: '2025-04-04'
+  detail: FDA 510(k) K242807, Traditional, product code QJU.
+  source: https://api.fda.gov/device/510k.json?search=applicant:%22DESKI%22
+- event: clearance
+  product: HeartFocus
+  date: '2026-06-03'
+  detail: FDA 510(k) K260780, Special, product code QJU.
+  source: https://api.fda.gov/device/510k.json?search=applicant:%22DESKI%22
+- event: launch
+  product: HeartFocus Link
+  date: '2026-05-28'
+  detail: >-
+    Cart-based-system variant announced; education/training only, France and United States,
+    no FDA or CE submission planned.
+  source: >-
+    https://www.businesswire.com/news/home/20260528026125/en/HeartFocus-Launches-HeartFocus-Link-Bringing-AI-Guided-Cardiac-Ultrasound-Education-and-Guidance-to-Any-Cart-Based-System
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No RFC 8594 Sunset/Deprecation header surface and no written deprecation policy. One
+    product retirement was announced with a date (HeartFocus Education, 2025-08-24), which
+    is evidence of practice but not of policy. No Deprecation pointer is wired into
+    apis.yml for that reason.
+status_page:
+  published: false
+  probed:
+  - url: https://status.heartfocus.ai
+    result: NXDOMAIN
+  - url: https://status.deski.ai
+    result: NXDOMAIN
+  - url: https://heartfocus.statuspage.io
+    status: 200
+    result: >-
+      not a status page - redirects to https://www.atlassian.com/software/statuspage
+      marketing, i.e. the subdomain is unclaimed
+  note: >-
+    No status page exists. No StatusPage pointer is wired into apis.yml. Scanning and AI
+    guidance run fully offline, so uptime matters mainly for the licence check and the
+    Portal.
+availability:
+  offline_operation: >-
+    Scanning and AI guidance work entirely offline. Internet is required only to install or
+    update the app, to verify the licence once every 30 days, and to send exams to a DICOM
+    PACS.
+  source: https://www.heartfocus.ai/faq-heartfocus
+licensing:
+  model: one licence per Butterfly probe serial number (HeartFocus), one licence per iPad
+    device (HeartFocus Link)
+  users_per_licence: unlimited
+  trial: 30-day free trial
+  renewal: >-
+    Auto-renewal, managed in the HeartFocus Portal; the app surfaces expiry and
+    auto-renewal warnings that direct the user to portal.heartfocus.ai.
+  revocation_effect: licence lapse removes access to the app
+sla:
+  published: false
+  note: >-
+    No SLA document. The pricing page differentiates support by tier — "Basic security,
+    compliance, support" on Small teams versus "Dedicated premium support / Faster response
+    24/7 priority" on Enterprise — but attaches no numeric targets. The CVD policy is the
+    only published response-time commitment (two business days to acknowledge).
+support:
+  email: support@deski.ai
+  contact_form: https://www.heartfocus.ai/contact-us
+  security: security@deski.ai
+  general: contact@deski.ai
+x-evidence:
+  checked: '2026-08-17'

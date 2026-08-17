@@ -1,0 +1,103 @@
+generated: '2026-08-17'
+method: searched
+source: https://www.heartfocus.ai/pricing
+docs: https://www.heartfocus.ai/pricing
+note: >-
+  These are software-licence plans for the HeartFocus mobile application, not API plans.
+  DESKi publishes no API, so there is no request quota, no rate tier and no metered usage
+  to record. The unit of licensing is a device, not a call: one licence per Butterfly probe
+  serial number, with unlimited users per licence. Published list prices are captured
+  verbatim. HeartFocus Link is priced separately and is not on this page — it is sold as a
+  single licence per iPad device, quote only, and is explicitly NOT sold or managed through
+  the HeartFocus Portal.
+currency: USD
+plan_count: 3
+billing_unit: licence per probe (per year, or per three years)
+metering: none (unlimited users and unlimited scans per licence)
+trial:
+  offered: true
+  length_days: 30
+  note: 30-day free trial, sign-up in the HeartFocus Portal, payment details required.
+plans:
+- name: Small teams (1 year)
+  audience: Independent physicians, small clinics or community hospitals
+  price: 695
+  currency: USD
+  period: year
+  unit: licence/year/probe
+  quota: unlimited users per licence
+  overage: null
+  limits:
+    max_licences: 5
+  includes:
+  - Unlimited users per licence
+  - Basic security, compliance, support
+  - Training video via email or website
+  cta: Try for free
+- name: Small teams (3 years)
+  audience: Independent physicians, small clinics or community hospitals
+  price: 1800
+  list_price: 2085
+  discount: Save 13%
+  currency: USD
+  period: 3 years
+  unit: licence/3 years/probe
+  quota: unlimited users per licence
+  overage: null
+  limits:
+    max_licences: 5
+  includes:
+  - Unlimited users per licence
+  - Up to 5 licences
+  - Basic security, compliance, support
+  - Training video via email or website
+  cta: Buy now
+- name: Enterprise
+  audience: Hospitals, hospital departments or health systems, 6+ licences
+  price: null
+  price_model: custom
+  currency: USD
+  period: null
+  quota: unlimited users per licence
+  overage: null
+  limits:
+    min_licences: 6
+  includes:
+  - Unlimited users per licence
+  - Tailored to your needs
+  - Advanced security & compliance
+  - Dedicated premium support
+  - Faster response 24/7 priority
+  - Personal training
+  - Help with set-up
+  - IT account manager
+  cta: Contact sales for quote
+related_pricing:
+- product: HeartFocus Link
+  model: single licence per iPad device, unlimited usage per licence
+  price: null
+  price_model: quote-only
+  purchase_channel: >-
+    Contact form only. "the Portal currently supports HeartFocus licences only. HeartFocus
+    Link licences are not purchased or managed through the Portal."
+  source: https://www.heartfocus.ai/faq-heartfocus-link
+corroboration:
+  faq_quote: >-
+    "A single license sold costs $695 (for customers who buy less than 5 licenses). Customers
+    receive a 30-day free trial sign-up period. Enterprise sales pricing is available upon
+    request to Sales (for more than 5 licenses)."
+  faq_url: https://www.heartfocus.ai/faq-heartfocus
+purchase:
+  self_serve: true
+  portal: https://portal.heartfocus.ai/signup
+  steps:
+  - Sign up on the HeartFocus Portal
+  - Purchase HeartFocus licences
+  - Set up the Butterfly iQ+ or iQ3 probe by entering its serial number
+  - Download HeartFocus from the Apple App Store
+  hardware_dependency: >-
+    Requires a Butterfly Network iQ+ or iQ3 probe, bought separately from Butterfly.
+x-evidence:
+  fetched: '2026-08-17'
+  url: https://www.heartfocus.ai/pricing
+  http_status: 200

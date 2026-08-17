@@ -1,8 +1,25 @@
 aid: deski
 name: DESKi
-description: 'DESKi is a company surfaced as a portfolio company of serena and added to the API Evangelist
-  network as a stub for enrichment. Sector: healthtech. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: 'DESKi is a French medical-device software company founded in 2016 in Bordeaux
+  by brothers Bertrand and Olivier Moal, trading publicly under its HeartFocus brand. Its
+  flagship product, HeartFocus, is an FDA-cleared AI cardiac imaging app that runs on iPhone
+  and iPad with Butterfly Network iQ+ and iQ3 handheld ultrasound probes, giving any healthcare
+  professional real-time probe guidance, automatic diagnostic-quality clip recording and live
+  view validation across the 10 standard transthoracic echocardiographic views (PLAX, PSAX-AV,
+  PSAX-MV, PSAX-PM, A4C, A5C, A2C, A3C, SC-4C, SC-IVC). A second product, HeartFocus Link,
+  adds the same AI guidance to existing cart-based ultrasound systems from GE HealthCare,
+  Philips, Siemens Healthineers, Mindray, FUJIFILM Sonosite, Samsung and Canon over a plain
+  HDMI capture path, for education and training only. DESKi holds two FDA 510(k) clearances
+  (K242807, 2025-04-04; K260780, 2026-06-03, product code QJU) and publishes a Coordinated
+  Vulnerability Disclosure process, a HIPAA & HBNR applicability statement, per-probe list
+  pricing and dated electronic instructions for use. Its only machine-facing integration
+  surface is DICOM: exams are transferred from the mobile app to a customer-configured PACS
+  server (server and client AE titles, host, port, optional TLS), and the DICOM conformance
+  statement and CycloneDX SBOM are available only by emailing support. DESKi publishes no
+  public REST or GraphQL API, no OpenAPI or AsyncAPI specification, no SDK, no CLI, no MCP
+  server and no developer portal; portal.heartfocus.ai is a customer licence-management
+  application, not a developer surface.'
+image: https://cdn.prod.website-files.com/6634a89a6fab56ada55e9d51/67b5d8e31ab3b8fe2d8e6bd2_DESKi%20Logo.png
 url: https://raw.githubusercontent.com/api-evangelist/deski/refs/heads/main/apis.yml
 x-type: company
 x-source: serena-portfolio
@@ -14,6 +31,14 @@ modified: '2026-08-17'
 tags:
 - Company
 - Healthtech
+- Medical Imaging
+- Cardiology
+- Ultrasound
+- Point-of-Care Ultrasound
+- Artificial Intelligence
+- Medical Device
+- DICOM
+- France
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -21,5 +46,111 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/deski-domain-security.yml
 - type: Website
-  url: http://www.heartfocus.ai
+  url: https://www.heartfocus.ai/
+- type: Product
+  name: HeartFocus
+  url: https://www.heartfocus.ai/product
+- type: Product
+  name: HeartFocus Link
+  url: https://www.heartfocus.ai/heartfocus-link
+- type: Product
+  name: POCUS HeartFocus Certification
+  url: https://www.heartfocus.ai/pocus-heartfocus-certification
+- type: Documentation
+  name: User manuals (electronic instructions for use)
+  url: https://www.heartfocus.ai/user-manuals
+- type: FAQ
+  name: FAQ - HeartFocus
+  url: https://www.heartfocus.ai/faq-heartfocus
+- type: FAQ
+  name: FAQ - HeartFocus Link
+  url: https://www.heartfocus.ai/faq-heartfocus-link
+- type: Training
+  url: https://www.heartfocus.ai/training
+- type: Pricing
+  url: https://www.heartfocus.ai/pricing
+- type: Plans
+  url: plans/deski-plans-pricing.yml
+- type: SignUp
+  url: https://portal.heartfocus.ai/signup
+- type: Login
+  url: https://portal.heartfocus.ai/login
+- type: Support
+  url: https://www.heartfocus.ai/contact-us
+- type: Blog
+  name: News
+  url: https://www.heartfocus.ai/news
+- type: Whitepapers
+  url: https://www.heartfocus.ai/white-papers-and-publications
+- type: TermsOfService
+  name: HeartFocus Software License Agreement
+  url: https://www.heartfocus.ai/heartfocus-software-license-agreement
+- type: TermsOfService
+  name: Portal Terms and Conditions
+  url: https://www.heartfocus.ai/portal-terms-conditions
+- type: PrivacyPolicy
+  url: https://www.heartfocus.ai/privacy-policy
+- type: Security
+  name: Coordinated Vulnerability Disclosure (CVD)
+  url: https://www.heartfocus.ai/security/cvd
+- type: VulnerabilityDisclosure
+  url: security/deski-vulnerability-disclosure.yml
+- type: Compliance
+  name: HIPAA & HBNR Applicability Statement
+  url: https://www.heartfocus.ai/hipaa-hbnr-applicability-statement
+- type: Conformance
+  url: conformance/deski-conformance.yml
+- type: Lifecycle
+  url: lifecycle/deski-lifecycle.yml
+- type: LLMsTxt
+  url: llms/deski-llms.txt
+- type: Careers
+  url: https://www.heartfocus.ai/careers
+- type: Contact
+  url: https://www.heartfocus.ai/contact-us
+- type: LegalNotice
+  url: https://www.heartfocus.ai/legal-information
+- type: LinkedIn
+  url: https://www.linkedin.com/company/deski/
+x-enrichment:
+  date: '2026-08-17'
+  status: minimal
+  artifacts_added: 8
+  pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    DESKi ships regulated end-user software, not a platform: HeartFocus is an FDA-cleared
+    iPhone/iPad app whose only machine-facing interface is a DICOM push to a PACS the
+    customer configures in-app, and the DICOM conformance statement that would describe it
+    is available only by emailing support@deski.ai — /openapi.json, /graphql, /llms.txt and
+    every /.well-known/* path return a real 404 on www.heartfocus.ai and deski.ai,
+    api./developer./link.heartfocus.ai do not resolve in DNS, docs.heartfocus.ai is an S3
+    bucket returning 403 AccessDenied, and portal.heartfocus.ai is a licence-management SPA
+    that answers 200 with the same 467-byte HTML shell for every path probed.
+  evidence:
+    - url: https://www.heartfocus.ai/openapi.json
+      status: 404
+    - url: https://www.heartfocus.ai/graphql
+      status: 404
+    - url: https://www.heartfocus.ai/llms.txt
+      status: 404
+    - url: https://www.heartfocus.ai/.well-known/agent-card.json
+      status: 404
+    - url: https://www.heartfocus.ai/.well-known/security.txt
+      status: 404
+    - url: https://deski.ai/.well-known/agent.json
+      status: 404
+    - url: https://docs.heartfocus.ai/
+      status: 403
+    - url: https://portal.heartfocus.ai/openapi.json
+      status: 200
+    - url: https://www.heartfocus.ai/security/cvd
+      status: 200
+    - url: https://www.heartfocus.ai/pricing
+      status: 200
+  checked: '2026-08-17'

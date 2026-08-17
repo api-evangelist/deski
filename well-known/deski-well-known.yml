@@ -1,0 +1,93 @@
+generated: '2026-08-17'
+method: probed
+source: live GET of every /.well-known/ path on every host named in apis.yml
+note: >-
+  Nothing is served. Every /.well-known/* path on www.heartfocus.ai and deski.ai returns
+  HTTP 404 with the Webflow body "Invalid .well-known request" (88 bytes), so no WellKnown
+  or SecurityTxt pointer is wired into apis.yml — a recorded absence, not a presence.
+  portal.heartfocus.ai is excluded from the document index on purpose: it is a
+  single-page application whose catch-all answers HTTP 200 with the same 467-byte HTML
+  shell for EVERY path probed, including /.well-known/security.txt, /openapi.json and
+  /.well-known/agent-card.json. Those 200s are SPA false positives, not documents, and
+  are recorded below as such.
+  DESKi does publish a security contact, just not at the RFC 9116 location: the
+  heartfocus.ai CAA record carries `0 iodef "mailto:security@deski.ai"` and the
+  Coordinated Vulnerability Disclosure page names the same address.
+  See security/deski-vulnerability-disclosure.yml.
+hosts:
+- host: https://www.heartfocus.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://deski.ai
+  note: redirects to https://www.heartfocus.ai for page paths; /.well-known/* 404s directly
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://portal.heartfocus.ai
+  spa_catch_all: true
+  note: >-
+    Every path returns HTTP 200 with an identical 467-byte HTML application shell. Treated
+    as a miss on all paths. No document was served.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    reason: spa-html-shell
+  - path: /.well-known/openid-configuration
+    status: 200
+    document: false
+    reason: spa-html-shell
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    document: false
+    reason: spa-html-shell
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    reason: spa-html-shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    document: false
+    reason: spa-html-shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    reason: spa-html-shell
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    reason: spa-html-shell
+documents_served: 0
+x-evidence:
+  checked: '2026-08-17'
+  hosts_probed: 3
+  paths_probed: 23

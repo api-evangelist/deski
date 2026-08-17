@@ -1,0 +1,158 @@
+# DESKi (HeartFocus)
+
+> DESKi is a French medical-device software company (Bordeaux, founded 2016) that builds
+> AI-guided cardiac ultrasound software under the HeartFocus brand. HeartFocus is an
+> FDA-cleared iPhone/iPad app that guides any healthcare professional through the 10
+> standard transthoracic echocardiographic views on Butterfly Network iQ+ and iQ3 probes;
+> HeartFocus Link brings the same guidance to existing cart-based ultrasound systems over
+> HDMI, for education and training only. DESKi publishes **no public API, no OpenAPI or
+> AsyncAPI specification, no GraphQL endpoint, no SDK, no CLI, no MCP server and no
+> developer portal.** Its only machine-facing integration surface is **DICOM**: the app
+> pushes completed exams to a PACS server the customer configures. This file is generated
+> by API Evangelist from DESKi's public website and product documentation; it is not
+> published by DESKi.
+
+<!--
+generated: '2026-08-17'
+method: generated
+source: apis.yml + https://www.heartfocus.ai/ (searched https://www.heartfocus.ai/llms.txt -> HTTP 404, https://deski.ai/llms.txt -> HTTP 404)
+-->
+
+## APIs
+
+- **No public API surface.** `/openapi.json`, `/openapi.yaml`, `/swagger.json`,
+  `/v1/openapi.json`, `/api-docs`, `/redoc`, `/graphql` and `/llms.txt` all return HTTP 404
+  on both `www.heartfocus.ai` and `deski.ai`. `api.heartfocus.ai`, `developer.heartfocus.ai`
+  and `link.heartfocus.ai` do not resolve in DNS. `docs.heartfocus.ai` resolves to an S3
+  bucket that returns HTTP 403 AccessDenied. Every `/.well-known/*` path returns 404
+  ("Invalid .well-known request"). Checked 2026-08-17.
+- `portal.heartfocus.ai` is a customer licence-management application, not a developer
+  surface. It is a single-page app whose catch-all answers HTTP 200 with the same 467-byte
+  HTML shell for every path, including `/openapi.json` and `/.well-known/agent-card.json` —
+  those are not documents.
+
+## Integration surface (DICOM, not HTTP)
+
+- **DICOM Storage SCU.** HeartFocus transfers validated exams to a customer-operated PACS.
+  The in-app DICOM server form takes: server application entity title, client application
+  entity title, server IP or hostname, server port, and an optional TLS toggle. A "Test"
+  action verifies the connection. Transfers are recorded in the app's audit log.
+- **DICOM conformance statement**: exists but is **not published** — available only by
+  emailing `support@deski.ai`. This is the document an integrator needs (SOP classes,
+  transfer syntaxes, AE roles), and it is the DICOM equivalent of an OpenAPI.
+- **SBOM**: a machine-readable CycloneDX (CDX) SBOM is offered, also only by email to
+  `support@deski.ai`.
+- **No idempotency.** Documented explicitly: resending the same exam produces a new ID, so
+  the exam is duplicated on the PACS rather than overwritten. Reconciliation is the user's
+  responsibility.
+- **Butterfly Cloud export**: Butterfly Enterprise customers can export HeartFocus exams
+  via Butterfly Link, arranged with Butterfly rather than DESKi.
+- Internet is required only to install/update the app, verify the licence every 30 days,
+  and send exams to a PACS. Scanning and AI guidance run fully offline.
+
+## Products
+
+- [HeartFocus](https://www.heartfocus.ai/product): FDA-cleared AI cardiac imaging app for
+  iPhone and iPad with Butterfly iQ+ and iQ3 probes. Live probe guidance, Auto-Record when
+  diagnostic quality is held for ~2.2s, Best-Effort-Record fallback, Manual Record, live
+  view-quality percentage, DICOM send to PACS. 10 views: PLAX, PSAX-AV, PSAX-MV, PSAX-PM,
+  A4C, A5C, A2C, A3C, SC-4C, SC-IVC.
+- [HeartFocus Link](https://www.heartfocus.ai/heartfocus-link): iPad app that captures the
+  video output of an existing cart-based ultrasound system over HDMI (plus a USB 3.0 video
+  capture card and an iPad adapter) and overlays the same AI guidance. Fully local
+  processing, no cloud, no network. **Education, training and image-acquisition practice
+  only — not for diagnostic use, clinical decision-making or treatment guidance.** Stated
+  compatible in principle with any cart system that has HDMI/DisplayPort output; GE
+  HealthCare, Philips, Siemens Healthineers, Mindray, FUJIFILM Sonosite, Samsung and Canon
+  are named. Available in France and the United States. No FDA or CE submission planned.
+- [POCUS HeartFocus Certification](https://www.heartfocus.ai/pocus-heartfocus-certification):
+  competency validation for cardiac ultrasound image acquisition with HeartFocus.
+- HeartFocus Education: **retired 2025-08-24.** Was free, distributed via Butterfly Garden,
+  education only, not a medical device.
+
+## Pricing
+
+- Small teams, 1 year: **$695** per licence/year/probe, up to 5 licences, unlimited users.
+- Small teams, 3 years: **$1,800** (list $2,085, "Save 13%") per licence/3 years/probe.
+- Enterprise (6+ licences): custom quote, advanced security & compliance, 24/7 priority
+  support, IT account manager.
+- 30-day free trial. One licence per Butterfly probe serial number; unlimited users and
+  unlimited scans per licence. HeartFocus Link is priced separately, quote only, and is not
+  sold or managed through the Portal.
+- See [pricing](https://www.heartfocus.ai/pricing) and `plans/deski-plans-pricing.yml`.
+
+## Regulatory and security
+
+- **FDA 510(k) K242807** — HeartFocus (V.1.1.1), Traditional, decided 2025-04-04, product
+  code QJU, Radiology panel.
+- **FDA 510(k) K260780** — HeartFocus, Special, decided 2026-06-03, product code QJU.
+- [HIPAA & HBNR Applicability Statement](https://www.heartfocus.ai/hipaa-hbnr-applicability-statement)
+  (2025-08-20): DESKi asserts HeartFocus is **not subject to HIPAA** because it does not
+  create, receive, maintain or transmit PHI on behalf of any healthcare entity and does not
+  access or store patient data. Note that the marketing pages separately claim
+  "HIPAA-compliant workflows"; both are DESKi's own published statements.
+- [Coordinated Vulnerability Disclosure](https://www.heartfocus.ai/security/cvd):
+  reports to `security@deski.ai`, PGP encryption requested, acknowledgement within two
+  business days. No bug bounty. No `/.well-known/security.txt` — but the `heartfocus.ai`
+  CAA record carries `0 iodef "mailto:security@deski.ai"`.
+- Scans are stored locally on the device; DESKi states no data is sent to DESKi servers.
+  TLS on the DICOM link is recommended but customer-toggleable.
+- Domain posture (probed 2026-08-17): TLSv1.3, HSTS max-age 31536000, SPF present, DMARC
+  present with `p=none`, CAA present, **DNSSEC not enabled**.
+- No SOC 2, ISO 27001, ISO 13485 or CE/MDR claim was found on any public page. No trust
+  center exists.
+
+## Documentation
+
+- [User manuals / electronic instructions for use](https://www.heartfocus.ai/user-manuals) —
+  PDF only. v1.3.1 (2026-06-16) and v1.2.1 (2025-12-22) are listed. Printed copies free on
+  request to `support@deski.ai`.
+- [FAQ - HeartFocus](https://www.heartfocus.ai/faq-heartfocus) ·
+  [FAQ - HeartFocus Link](https://www.heartfocus.ai/faq-heartfocus-link)
+- [Training](https://www.heartfocus.ai/training)
+- [White papers and publications](https://www.heartfocus.ai/white-papers-and-publications) —
+  the "HeartFocus Deployment and Security White Paper" (network infrastructure, network
+  architecture, security controls) is the closest thing to integration documentation and is
+  **email-gated behind a lead form**.
+- Peer-reviewed evidence: [JACC: Advances 10.1016/j.jacadv.2025.102005](https://www.jacc.org/doi/10.1016/j.jacadv.2025.102005)
+  — nurses acquired diagnostic-quality scans in 100% of patients after a half-day of training.
+- No changelog, no release notes, no status page, no API reference, no Postman collection.
+
+## Company
+
+- [Website](https://www.heartfocus.ai/) · [About](https://www.heartfocus.ai/about) ·
+  [News](https://www.heartfocus.ai/news) · [Careers](https://www.heartfocus.ai/careers) ·
+  [Contact](https://www.heartfocus.ai/contact-us) ·
+  [Legal notice](https://www.heartfocus.ai/legal-information) ·
+  [LinkedIn](https://www.linkedin.com/company/deski/)
+- DESKi, simplified joint stock company, RCS 914 943 774 00010, VAT FR25818145211,
+  2 place de la Bourse, 33000 Bordeaux, France. `contact@deski.ai`, +33 680 741 793.
+- Founded 2016 by brothers Bertrand Moal (CEO, MD with a PhD in biomechanical engineering)
+  and Olivier Moal (CPO, Berkeley/EPFL engineering). HeartFocus created 2023. Security
+  Officer / CISO: Kelly Porfirio. CTO: David Audrain.
+- No GitHub organisation (`github.com/deski` and `github.com/heartfocus` both 404). No npm,
+  PyPI, RubyGems, crates.io or NuGet package. The `deski` name on npm is an empty
+  placeholder with no published versions and no maintainer link to DESKi.
+- Support: `support@deski.ai` · Security: `security@deski.ai` · General: `contact@deski.ai`
+
+## Artifacts
+
+- [apis.yml](apis.yml) — APIs.json 0.20 profile
+- [plans/deski-plans-pricing.yml](plans/deski-plans-pricing.yml) — published licence tiers
+- [conformance/deski-conformance.yml](conformance/deski-conformance.yml) — DICOM, FDA,
+  HIPAA/HBNR, SBOM, and the explicit not-applicable list for web-API standards
+- [lifecycle/deski-lifecycle.yml](lifecycle/deski-lifecycle.yml) — product versions, eIFU
+  dates, retirement and launch events, licensing
+- [security/deski-vulnerability-disclosure.yml](security/deski-vulnerability-disclosure.yml)
+- [security/deski-domain-security.yml](security/deski-domain-security.yml)
+- [well-known/deski-well-known.yml](well-known/deski-well-known.yml) — recorded absence
+- [rate-limits/deski-rate-limits.yml](rate-limits/deski-rate-limits.yml) — honest zero
+
+## For providers
+
+DESKi could become machine-readable without shipping a new product. The three highest-value
+moves, in order: publish the **DICOM conformance statement** at a stable URL instead of by
+email request; publish the **CycloneDX SBOM** at a URL so it can be fetched and diffed; and
+serve **`/.well-known/security.txt`** pointing at the existing CVD policy, which already
+exists and is already referenced in DNS via CAA `iodef`. Corrections and re-scores are free:
+info@apievangelist.com.

@@ -1,0 +1,49 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://www.heartfocus.ai/pricing, https://www.heartfocus.ai/faq-heartfocus,
+  https://www.heartfocus.ai/faq-heartfocus-link, HeartFocus v1.3.1 user manual
+limit_count: 0
+note: >-
+  An honest zero, and for a structural reason rather than an omission: DESKi publishes no
+  HTTP API, so there is no request budget, no window, no burst allowance and no
+  X-RateLimit-*/RateLimit-*/Retry-After response header to record. Scans and AI guidance
+  are unmetered by design — every published plan says "unlimited users per licence" and
+  unlimited usage per licence. No RateLimits pointer is wired into apis.yml, because
+  asserting one would credit DESKi with a runtime rate-limit signal it does not ship.
+headers:
+  published: []
+  observed: []
+  note: No API responses exist to observe.
+exhaustion_status: null
+limits: []
+quota_analogues:
+- mechanism: licence verification
+  detail: >-
+    The app must reach the licence service once every 30 days; failing that, access lapses
+    until the licence is re-verified. This is the only recurring network-side constraint on
+    use.
+  source: https://www.heartfocus.ai/faq-heartfocus
+- mechanism: licence count ceiling
+  detail: >-
+    Self-serve purchasing is capped at 5 licences (Small teams); 6+ requires the Enterprise
+    quote path. See plans/deski-plans-pricing.yml.
+  source: https://www.heartfocus.ai/pricing
+- mechanism: per-view recording ceiling
+  detail: >-
+    An application-level constraint rather than a network one: only one clip per reference
+    view can be recorded during acquisition, so a manual record can erase an automatic one.
+  source: HeartFocus v1.3.1 user manual
+- mechanism: DICOM transfer throughput
+  detail: >-
+    Not a limit DESKi imposes but a documented dependency: "The transfer duration depends on
+    the data connection speed with the DICOM server. A 25 Mbps connection will lead to a
+    1 minute transfer."
+  source: HeartFocus v1.3.1 user manual
+x-evidence:
+  checked: '2026-08-17'
+  probed:
+  - url: https://www.heartfocus.ai/pricing
+    status: 200
+  - url: https://www.heartfocus.ai/openapi.json
+    status: 404

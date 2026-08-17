@@ -1,0 +1,195 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://www.heartfocus.ai/product, https://www.heartfocus.ai/faq-heartfocus,
+  https://www.heartfocus.ai/hipaa-hbnr-applicability-statement,
+  https://www.heartfocus.ai/security/cvd, the HeartFocus v1.3.1 user manual PDF, and the
+  openFDA 510(k) API (https://api.fda.gov/device/510k.json?search=applicant:"DESKI")
+note: >-
+  DESKi is a regulated medical-device software company, not an API provider, so the
+  standards it conforms to are imaging and regulatory standards rather than web-API ones.
+  There is no OpenAPI, AsyncAPI, GraphQL SDL or OAuth surface to assert conformance
+  against — every web-API entry below is recorded as not-applicable with the reason, so
+  the absence is explicit instead of implied.
+standards:
+- id: dicom
+  name: DICOM (Digital Imaging and Communications in Medicine)
+  conforms: true
+  role: Storage SCU (transfers exams to a customer-operated PACS)
+  evidence: >-
+    "Seamless PACS Integration — Secure DICOM transfer to PACS for direct upload and
+    archival" (https://www.heartfocus.ai/product). The v1.3.1 user manual documents the
+    in-app DICOM server form — server application entity title, client application entity
+    title, server IP or hostname, server port, and an option to enable TLS — plus a
+    connection test action and per-transfer audit logging.
+  conformance_statement:
+    published: false
+    availability: on-request
+    channel: support@deski.ai
+    quote: >-
+      "HeartFocus allows you to transfer exams to PACS servers using DICOM protocols. If
+      needed, the DICOM conformance statement of HeartFocus can be obtained by contacting
+      our support team via email at support@deski.ai."
+    note: >-
+      The DICOM conformance statement is the DICOM-world equivalent of an OpenAPI: it names
+      the SOP classes, transfer syntaxes and AE roles an integrator needs. DESKi keeps it
+      behind an email request, so the SOP classes it supports cannot be recorded here.
+      Publishing it at a stable URL would make the only machine-facing surface DESKi ships
+      independently readable.
+- id: tls
+  name: TLS transport encryption
+  conforms: true
+  evidence: >-
+    TLS is a per-DICOM-server toggle in the app, and the manual states "It is strongly
+    recommended to enable the TLS protocol on the DICOM server to secure the transmission
+    of patient data." www.heartfocus.ai itself negotiates TLSv1.3 and sends HSTS with
+    max-age=31536000 (see security/deski-domain-security.yml).
+  caveat: >-
+    TLS on the DICOM link is optional and can be disabled by the customer; the app warns
+    but does not prevent it.
+- id: fda-510k
+  name: US FDA 510(k) premarket notification
+  conforms: true
+  evidence: Two clearances confirmed against the openFDA 510(k) database on 2026-08-17.
+  clearances:
+  - k_number: K242807
+    device_name: HeartFocus (V.1.1.1)
+    decision_date: '2025-04-04'
+    clearance_type: Traditional
+    product_code: QJU
+    advisory_committee: Radiology
+    applicant: Deski
+  - k_number: K260780
+    device_name: HeartFocus
+    decision_date: '2026-06-03'
+    clearance_type: Special
+    product_code: QJU
+    advisory_committee: Radiology
+    applicant: Deski
+  source: https://api.fda.gov/device/510k.json?search=applicant:%22DESKI%22
+  scope_note: >-
+    Clearance covers the HeartFocus clinical app only. DESKi states plainly that HeartFocus
+    Link is education/training only, is not for diagnostic use or clinical decision-making,
+    and that "No FDA or CE regulatory submission is currently planned"
+    (https://www.heartfocus.ai/faq-heartfocus-link).
+- id: hipaa
+  name: HIPAA (45 CFR 160/164)
+  conforms: not-applicable
+  evidence: >-
+    DESKi publishes a dated, signed applicability statement (2025-08-20, authorized by
+    Kelly Porfirio, Security Officer) asserting HeartFocus is NOT subject to HIPAA because
+    DESKi "does not create, receive, maintain, or transmit Protected Health Information
+    (PHI) on behalf of any healthcare entity" and "does not access or store any patient
+    data, whether identifiable or de-identified."
+  url: https://www.heartfocus.ai/hipaa-hbnr-applicability-statement
+  note: >-
+    The marketing pages simultaneously claim HIPAA-compliant workflows ("complies with
+    HIPAA and TLS encryption best practices", faq-heartfocus; "ensures HIPAA-compliant
+    workflows", /product). Both statements are recorded as published; they are the
+    provider's own words and they do not read consistently.
+- id: ftc-hbnr
+  name: FTC Health Breach Notification Rule
+  conforms: not-applicable
+  evidence: >-
+    Same statement: DESKi asserts the HBNR does not apply because its services do not
+    involve personal health records or consumer-facing health applications as defined by
+    the rule.
+  url: https://www.heartfocus.ai/hipaa-hbnr-applicability-statement
+- id: sbom-cyclonedx
+  name: CycloneDX Software Bill of Materials
+  conforms: partial
+  evidence: >-
+    "A machine-readable (CDX) version of the Software Bill of Materials (SBOM) can be
+    obtained by contacting our support team via email at support@deski.ai."
+    (HeartFocus v1.3.1 user manual, Software Bills of Materials section)
+  published: false
+  availability: on-request
+  note: >-
+    A machine-readable SBOM exists and is offered, but only by email. It is not served at
+    a URL, so it cannot be fetched, diffed or monitored.
+- id: cvd-rfc9116
+  name: Coordinated vulnerability disclosure / RFC 9116 security.txt
+  conforms: partial
+  evidence: >-
+    A full CVD policy is published at https://www.heartfocus.ai/security/cvd with a
+    security@deski.ai contact and a two-business-day acknowledgement commitment, and the
+    heartfocus.ai CAA record carries `0 iodef "mailto:security@deski.ai"`. But
+    /.well-known/security.txt returns 404 on every host, so the machine-readable RFC 9116
+    form is absent.
+- id: gdpr
+  name: GDPR
+  conforms: claimed
+  evidence: >-
+    DESKi is a French (Bordeaux) simplified joint stock company, RCS 914 943 774 00010, and
+    publishes a privacy policy governing HeartFocus Portal and app data processing.
+  url: https://www.heartfocus.ai/privacy-policy
+  note: No named certification, DPA link or supervisory-authority reference was found.
+- id: eu-mdr
+  name: EU MDR / CE marking
+  conforms: unknown
+  evidence: >-
+    No CE mark, notified body or MDR class is stated on any public page. HeartFocus is
+    stated to be launched in the US (FDA cleared) and HeartFocus Link to be available in
+    France and the United States; HeartFocus Link explicitly has no CE submission planned.
+- id: soc2
+  name: SOC 2
+  conforms: unknown
+  evidence: No SOC 2 claim, report or trust center found on any DESKi/HeartFocus host.
+- id: iso-27001
+  name: ISO/IEC 27001
+  conforms: unknown
+  evidence: No ISO 27001 claim found on any public page.
+- id: iso-13485
+  name: ISO 13485 (medical device QMS)
+  conforms: unknown
+  evidence: >-
+    Not claimed publicly, though the company employs a CRQO/CISO and holds FDA clearances
+    that imply a quality system. Recorded as unknown rather than inferred.
+- id: openapi
+  name: OpenAPI
+  conforms: not-applicable
+  evidence: >-
+    No OpenAPI document exists. /openapi.json, /openapi.yaml, /swagger.json,
+    /v1/openapi.json, /api-docs and /redoc all return HTTP 404 on www.heartfocus.ai and
+    deski.ai; api.heartfocus.ai, developer.heartfocus.ai and link.heartfocus.ai do not
+    resolve in DNS.
+- id: graphql
+  name: GraphQL
+  conforms: not-applicable
+  evidence: /graphql returns HTTP 404 on every host probed. No GraphQL surface exists.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: not-applicable
+  evidence: >-
+    No event, streaming or webhook surface is published. Exam transfer is a user-initiated
+    DICOM push from the device, not a callback.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: not-applicable
+  evidence: >-
+    No OAuth surface. /.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource 404 everywhere. The HeartFocus Portal is a
+    first-party login for licence management with no documented third-party authorization
+    flow, and the app itself needs no login to scan (licence verification once every
+    30 days).
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: not-applicable
+  evidence: No HTTP API, so no error envelope to assess.
+- id: idempotency
+  name: Idempotency keys
+  conforms: false
+  evidence: >-
+    The opposite is documented, and it matters for anyone integrating the PACS side: "If
+    you send the same exam multiple times, each one of them will have a different ID. Thus,
+    if you send them to a unique DICOM server, the exam will be duplicated and not
+    overwritten." Resending a modified exam creates a duplicate for the same patient, and
+    the manual assigns reconciliation to the user (v1.3.1 user manual, Exam Review).
+  note: >-
+    Recorded as an honest false, not omitted. No Idempotency pointer is wired into
+    apis.yml — there is no idempotency support to point at.
+x-evidence:
+  checked: '2026-08-17'
+  openfda_query: https://api.fda.gov/device/510k.json?search=applicant:%22DESKI%22
+  manual: >-
+    https://cdn.prod.website-files.com/663923b192e5c27512699a81/6a3142c4069ee581aebecabd_HF%20v1.3.1%20User_Manual.pdf
