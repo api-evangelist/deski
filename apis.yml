@@ -19,6 +19,17 @@ description: 'DESKi is a French medical-device software company founded in 2016 
   public REST or GraphQL API, no OpenAPI or AsyncAPI specification, no SDK, no CLI, no MCP
   server and no developer portal; portal.heartfocus.ai is a customer licence-management
   application, not a developer surface.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/6634a89a6fab56ada55e9d51/67b5d8e31ab3b8fe2d8e6bd2_DESKi%20Logo.png
 url: https://raw.githubusercontent.com/api-evangelist/deski/refs/heads/main/apis.yml
 x-type: company
