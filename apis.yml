@@ -82,6 +82,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: RateLimits
+  url: rate-limits/deski-rate-limits.yml
 - type: DomainSecurity
   url: security/deski-domain-security.yml
 - type: Website
